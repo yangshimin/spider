@@ -1,0 +1,10 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="JsonDuplicatePropertyKeys" enabled="true" level="TYPO" enabled_by_default="true" />
+    <inspection_tool class="JsonStandardCompliance" enabled="true" level="TYPO" enabled_by_default="true" />
+    <inspection_tool class="PyStringFormatInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PySuperArgumentsInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PyTypeCheckerInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+  </profile>
+</component>
