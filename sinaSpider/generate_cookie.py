@@ -8,6 +8,10 @@ from db import CookiesRedisClient, AccountRedisClient
 from multiprocessing import Process
 from yundama_requests import ydm
 from PIL import Image
+<<<<<<< HEAD
+=======
+import os
+>>>>>>> 0e52f7685b57e7a553ec1fc14e289ce15e039462
 
 
 browser = webdriver.Chrome()
@@ -30,6 +34,10 @@ def get_account_lists():
 
 def login_sina(item):
     cookies = {}
+<<<<<<< HEAD
+=======
+    flag = True
+>>>>>>> 0e52f7685b57e7a553ec1fc14e289ce15e039462
     url = 'https://login.sina.com.cn/signup/signin.php'
     browser.get(url)
     username = wait.until(
@@ -52,10 +60,25 @@ def login_sina(item):
         web_path = '{}.png'.format(item[0])
         code_path = 'code_{}.jpg'.format(item[0])
         browser.get_screenshot_as_file(web_path)
+<<<<<<< HEAD
         identifying_code(web_path, item[0])
         time.sleep(3)
         code = ydm(code_path)
         print(code)
+=======
+        browser.save_screenshot(web_path)
+
+        while flag:
+            try:
+                if os.path.exists(os.path.abspath(web_path)):
+                    identify_code(web_path, item[0])
+                    if os.path.exists(os.path.abspath(code_path)):
+                        code = ydm(code_path)
+                        if code:
+                            flag = False
+            except:
+                print('验证验证码阶段出现了错误....')
+>>>>>>> 0e52f7685b57e7a553ec1fc14e289ce15e039462
 
         code_input = wait.until(
             EC.presence_of_element_located((By.ID, 'door'))
@@ -68,6 +91,7 @@ def login_sina(item):
         time.sleep(5)
 
     menu = wait.until(
+<<<<<<< HEAD
         EC.presence_of_element_located((By.CSS_SELECTOR, '.ac-login-cnt '))
     )
     print(menu)
@@ -77,14 +101,29 @@ def login_sina(item):
     cookies = browser.get_cookies()
     print(cookies)
     for cookie in cookies:
+=======
+        EC.presence_of_element_located((By.XPATH, '/html/body/div[4]/div[1]/div[3]/ul/li[1]/a/span[1]'))
+    )
+
+    menu.click()
+    time.sleep(5)
+    page_cookies = browser.get_cookies()
+    for cookie in page_cookies:
+>>>>>>> 0e52f7685b57e7a553ec1fc14e289ce15e039462
         cookies[cookie['name']] = cookie['value']
     print(cookies)
     browser.quit()
 
 
+<<<<<<< HEAD
 def identifying_code(f, account):
     im = Image.open(f)
     box = (678, 299, 778, 350)
+=======
+def identify_code(f, account):
+    im = Image.open(f)
+    box = (957, 293, 1060, 334)
+>>>>>>> 0e52f7685b57e7a553ec1fc14e289ce15e039462
     im.crop(box).save('code_{}.jpg'.format(account), 'jpeg')
 
 
