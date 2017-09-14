@@ -40,14 +40,14 @@ class FlyNoWay(FlyBehaivor):
 
 class Duck(object):
     def __init__(self, flytype, quacktype):
-        self.quack = quacktype
-        self.fly = flytype
+        self.quack = quacktype()
+        self.fly = flytype()
 
     def performfly(self):
-        self.quack().quack()
+        self.quack.quack()
 
     def performquack(self):
-        self.fly().fly()
+        self.fly.fly()
 
     def swim(self):
         print('所有鸭子都会游泳呢~')
