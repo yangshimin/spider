@@ -7,6 +7,7 @@ import chardet
 import json
 from db import MongoClient
 import time
+from config import proxies
 
 
 base_list_url = 'http://music.163.com'
@@ -51,6 +52,7 @@ class wangyimusic_comment(object):
     def __init__(self):
         self.s = requests.Session()
         self.s.headers.update(headers)
+        self.s.proxies = proxies
         self.offset = 0
         self._db = MongoClient()
         # 第一个参数
