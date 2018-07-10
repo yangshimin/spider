@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://F:/code/project-zhongzheng/DLQYSpider2/.idea/DLQYSpider2.iml" filepath="F:/code/project-zhongzheng/DLQYSpider2/.idea/DLQYSpider2.iml" />
+      <module fileurl="file://F:/code/Python_test/.idea/Python_test.iml" filepath="F:/code/Python_test/.idea/Python_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Rabbitmq_Server.iml" filepath="$PROJECT_DIR$/.idea/Rabbitmq_Server.iml" />
+      <module fileurl="file://$USER_HOME$/Desktop/extract_appointed_music/.idea/extract_appointed_music.iml" filepath="$USER_HOME$/Desktop/extract_appointed_music/.idea/extract_appointed_music.iml" />
+      <module fileurl="file://F:/code/zhouyi/.idea/zhouyi.iml" filepath="F:/code/zhouyi/.idea/zhouyi.iml" />
+    </modules>
+  </component>
+</project>
