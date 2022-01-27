@@ -85,7 +85,6 @@ class Application(object):
             "upgrade-insecure-requests": "1",
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
                           "Chrome/97.0.4692.99 Safari/537.36",
-            "cookie": "PHPSESSID=852kiqma41jfdp4m893sa911pb; kt_ips=45.88.41.234; __cf_bm=pmUB41ZHgnOIMDDTP_65DHX4O8AO2YbWgcYBwdo3Gt4-1643288867-0-AcoWnm5kUhGp5zFSLcV04r8zZBC2VitN411GgIQDkV9rbpIo8K/eritLGYzAymxzW1/YBFLS68+O9nUyM90mh1s=; _ga=GA1.1.1113620659.1643288869; kt_tcookie=1; _ga_1DTX7D4FHE=GS1.1.1643288869.1.1.1643289084.0"
         }
 
         new_product_res = requests.get(url, headers=headers)
