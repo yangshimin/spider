@@ -121,7 +121,6 @@ class Application(object):
         page_items_selector = lxml_obj.xpath(".//*/div[@id='list_videos_common_videos_list']/div[@class='container']/"
                                              "section//h6[@class='title']/a/@href")
 
-        pdb.set_trace()
         for page_item in page_items_selector:
             self.parse_video_detail(page_item)
 
@@ -175,8 +174,6 @@ class Application(object):
                                       "Chrome/96.0.4664.93 Safari/537.36",
                     }
 
-
-
                     cover_res = self.s.get(cover, headers=cover_headers)
                     cover_path = os.path.join(file_dir, 'cover.jpg')
                     with open(cover_path, 'wb') as f:
@@ -196,8 +193,10 @@ class Application(object):
             playlist_info = self.get_m3u8_info(m3u8_pattern.group(1), file_dir)
             # 因为这个网站是同一个视频的所有ts文件都用同一个key解密 所以keys有且只有一个
             decrypt_key_url = playlist_info.keys[0].absolute_uri
-            decrypt_key = self.get_decrypt_key(decrypt_key_url)
-            decrypt_iv = self.generate_iv(playlist_info.keys[0].iv)
+            # 同时把decrypt_key 写入文件, 要读取用os.open(os.path.join(file_dir, 'key.txt'), 'rb').read()
+            # iv_key 也是同理
+            decrypt_key = self.get_decrypt_key(decrypt_key_url, file_dir)
+            decrypt_iv = self.generate_iv(playlist_info.keys[0].iv, file_dir)
             playlist_ts_list = [segment.absolute_uri for segment in playlist_info.segments]
 
             # 当失败后重新运行不下载已经下载过的视频
@@ -248,7 +247,11 @@ class Application(object):
                 res = self.s.get(down_url, headers=download_headers)
                 file_path = os.path.join(file_dir, ts_name)
                 with open(file_path, 'wb') as f:
-                    f.write(cryptor.decrypt(res.content))
+                    # 写入解密的视频内容
+                    # f.write(cryptor.decrypt(res.content))
+                    # 写入未解密的视频内容
+                    f.write(res.content)
+
                 logging.info(f"下载成功: {ts_name}")
             except Exception as e:
                 raise Exception(f"下载失败：{ts_name}:{e.args}")
@@ -282,10 +285,11 @@ class Application(object):
             logging.error("请求m3u8文件失败")
         return playlist_info
 
-    def get_decrypt_key(self, url):
+    def get_decrypt_key(self, url, file_dir):
         """
         获取解密的key
         :param url:
+        :param file_dir
         :return:
         """
         headers = {
@@ -307,16 +311,20 @@ class Application(object):
         res = self.s.get(url, headers=headers)
         if res.status_code == 200:
             logging.info("下载解密key成功")
-            # return bytearray([int(i) for i in res.content])
+
+            with open(os.path.join(file_dir, 'key.txt'), 'wb') as f:
+                f.write(res.content)
+            logging.info("保存key成功")
             return res.content
         else:
             logging.error("下载解密key失败")
 
     @staticmethod
-    def generate_iv(iv_str):
+    def generate_iv(iv_str, file_dir):
         """
         生成aes解密的偏移量
         :param iv_str:
+        :param file_dir:
         :return:
         """
         iv_str = iv_str.replace("0x", "")
@@ -324,6 +332,10 @@ class Application(object):
         for i in range(len(iv_str) // 2):
             s = iv_str[2 * i:2 * i + 2]
             iv_array.append(int(s, 16))
+
+        with open(os.path.join(file_dir, 'iv.txt'), 'wb') as f:
+            f.write(bytes(iv_array))
+        logging.info("保存iv成功")
         return bytes(iv_array)
 
 
