@@ -121,11 +121,12 @@ class Application(object):
         page_items_selector = lxml_obj.xpath(".//*/div[@id='list_videos_common_videos_list']/div[@class='container']/"
                                              "section//h6[@class='title']/a/@href")
 
+        pdb.set_trace()
         for page_item in page_items_selector:
             self.parse_video_detail(page_item)
 
-        next_page_selector = lxml_obj.xpath(".//*/li[@class='page-item']/span[contains(@class, 'active')]/.."
-                                            "/../following-sibling::li/a/text()")
+        next_page_selector = lxml_obj.xpath(".//*/li[@class='page-item']/span[contains(@class, 'active')]/../"
+                                            "following-sibling::li[1]/a/text()")
         if next_page_selector:
             next_page = urljoin(self.url, str(int(next_page_selector[0])) + "/")
             self.get_new_product(next_page)
